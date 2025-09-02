@@ -16,3 +16,19 @@ class PointPingerWarpPatch
     }
 }
 #endif
+
+
+[HarmonyPatch(typeof(CharacterClimbing), "GetRequestedPostition")]
+class CharacterClimbingGetRequestedPostitionPatch
+{
+    static void Prefix(CharacterClimbing __instance)
+    {
+        if (MapHandler.Instance.GetCurrentBiome() != Biome.BiomeType.Tropics)
+        {
+            return;
+        }
+
+        var character = Traverse.Create(__instance).Field("character").GetValue<Character>();
+        character.data.slippy = 0;
+    }
+}

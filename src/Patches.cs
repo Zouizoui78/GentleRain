@@ -9,7 +9,12 @@ class PointPingerWarpPatch
 {
     static void Postfix(PointPinger __instance)
     {
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit raycastHit) && __instance.character.IsLocal)
+        if (!__instance.character.IsLocal)
+        {
+            return;
+        }
+
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out RaycastHit raycastHit))
         {
             __instance.character.WarpPlayerRPC(raycastHit.point, false);
         }
@@ -28,7 +33,6 @@ class CharacterClimbingGetRequestedPostitionPatch
             return;
         }
 
-        var character = Traverse.Create(__instance).Field("character").GetValue<Character>();
-        character.data.slippy = 0;
+        Traverse.Create(__instance).Field("character").GetValue<Character>().data.slippy = 0;
     }
 }

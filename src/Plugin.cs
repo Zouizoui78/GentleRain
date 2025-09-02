@@ -1,6 +1,7 @@
 ﻿using BepInEx;
 using BepInEx.Logging;
 using HarmonyLib;
+using UnityEngine;
 
 namespace GentleRain;
 
@@ -11,19 +12,39 @@ public class Plugin : BaseUnityPlugin
 
     private void Awake()
     {
-        // Plugin startup logic
         Logger = base.Logger;
         Logger.LogInfo($"Plugin {MyPluginInfo.PLUGIN_GUID} is loaded!");
         var harmony = new Harmony("org.zouizoui.peakmods.gentlerain");
         harmony.PatchAll();
     }
-}
 
-[HarmonyPatch(typeof(PointPing), "Start")]
-class PointPingStartPath
-{
-    static void Prefix()
+    public void Update()
     {
-        Plugin.Logger.LogInfo("Triggered by pointing !!!");
+#if DEBUG
+        if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            MapHandler.JumpToSegment(Segment.Beach);
+        }
+        else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            MapHandler.JumpToSegment(Segment.Tropics);
+        }
+        else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            MapHandler.JumpToSegment(Segment.Alpine);
+        }
+        else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            MapHandler.JumpToSegment(Segment.Caldera);
+        }
+        else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            MapHandler.JumpToSegment(Segment.TheKiln);
+        }
+        else if (Input.GetKey(KeyCode.LeftControl) && Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            MapHandler.JumpToSegment(Segment.Peak);
+        }
+#endif
     }
 }

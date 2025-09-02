@@ -23,6 +23,12 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>../peak_lib/Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="PhotonUnityNetworking">
+      <HintPath>../peak_lib/PhotonUnityNetworking.dll</HintPath>
+    </Reference>
+    <Reference Include="Zorro.Core.Runtime">
+      <HintPath>../peak_lib/Zorro.Core.Runtime.dll</HintPath>
+    </Reference>
   </ItemGroup>
   
   <ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789`))' == 'net'">
